@@ -1,3 +1,8 @@
+# ignore folders
+cgi-bin/
+dowehost*/
+.htaccess
+
 vendor/
 node_modules/
 npm-debug.log
