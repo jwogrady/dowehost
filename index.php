@@ -68,16 +68,13 @@
                 border: 1px dashed rgba(0, 255, 0, 0.8);
             }
 
-            h1 {
+            h1, h2, h3, h4 {
                 text-align: center;
-                font-size: 3rem;
                 margin: 0;
             }
-            h2 {
-                text-align: center;
-                font-size: 8rem;
-                margin: 0;
-            }
+            h1 { font-size: 3rem; }
+            h2 { font-size: 8rem; }
+            h3, h4 { font-size: 1.5rem; }
             .home form {
                 display: flex;
                 flex-direction: column;
@@ -118,7 +115,12 @@
                 <?php if ( in_array_r($dns_a[0]['ip'], $aig) ) { ?>
                     <h2>YES</h2>
                 <?php } else { ?>
-                    <h2>NO</h2>
+                    <?php if ( strpos($dns_ns[0]['target'], 'ns.cloudflare.com') ) { ?>
+                        <h3>Sorry, it seems that you use Cloudflare as DNS manager</h3>
+                        <h4>We can not be sure of our response</h4>
+                    <?php } else { ?>
+                        <h2>NO</h2>
+                    <?php } ?>
                 <?php } ?>
             </div>
 
