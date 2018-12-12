@@ -2,6 +2,8 @@
 cgi-bin/
 dowehost*/
 .htaccess
+error_log
+.well-known/
 
 vendor/
 node_modules/
