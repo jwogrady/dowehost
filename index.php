@@ -15,7 +15,7 @@
     );
 
     function clean_domain($domain) {
-        $protocols = array('http://', 'https://', 'http://www.', 'https://www.');
+        $protocols = array('http://', 'https://', 'http://www.', 'https://www.', 'www.');
         foreach ( $protocols as $prot ) {
             $domain = str_replace($prot, '', $domain);
         }
