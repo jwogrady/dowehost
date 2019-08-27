@@ -25,11 +25,13 @@
     function in_array_r($needle, $haystack, $strict = false) {
         foreach ($haystack as $item) {
             if (($strict ? $item === $needle : $item == $needle) || (is_array($item) && in_array_r($needle, $item, $strict))) {
-                return true;
+                return array( 'in_host' => true, 'host' => $item['host'] );
             }
         }
         return false;
     }
+
+    $host = in_array_r($dns_a[0]['ip'], $aig);
 ?>
 
 <!DOCTYPE html>
@@ -112,7 +114,7 @@
         <body class="answer">
             <div>
                 <h1>Do We Host You?</h1>
-                <?php if ( in_array_r($dns_a[0]['ip'], $aig) ) { ?>
+                <?php if ( $host['in_host'] ) { ?>
                     <h2>YES</h2>
                 <?php } else { ?>
                     <?php if ( strpos($dns_ns[0]['target'], 'ns.cloudflare.com') ) { ?>
@@ -124,9 +126,12 @@
                 <?php } ?>
             </div>
 
-            <?php if ( isset( $_REQUEST['debug'] ) ) { ?>
+            <?php if ( isset( $_REQUEST['debug'] ) || isset( $_REQUEST['host'] ) ) { ?>
                 <div class="debug info">
                     <p>IP: <?php print_r($dns_a[0]['ip']); ?></p>
+                    <?php if ( $host['in_host'] && isset( $_REQUEST['host'] ) ) { ?>
+                        <p>HOST: <?php echo $host['host']; ?></p>
+                    <?php } ?>
                     <?php foreach ($dns_ns as $key => $value) { ?>
                         <p>NS_<?php echo $key ?>: <?php print_r($value['target']); ?></p>
                     <?php } ?>
